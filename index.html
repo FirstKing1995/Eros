@@ -745,6 +745,63 @@
         .sc-bg { width: 36px; height: 36px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.25); flex-shrink: 0; cursor: pointer; padding: 0; }
         .sc-bg.on { border-color: #fff; }
 
+        /* === JOGO: VERDADE OU CONSEQUÊNCIA === */
+        .game-banner {
+            display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; cursor: pointer;
+            margin: 4px 0 14px; padding: 14px 16px; border-radius: 16px; color: #fff; font-family: inherit;
+            background: var(--grad-fire); border: none; box-shadow: 0 8px 26px rgba(255,46,99,0.34);
+        }
+        .game-banner:active { transform: scale(0.98); }
+        .game-banner .gb-dice { font-size: 30px; line-height: 1; }
+        .game-banner .gb-text { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .game-banner .gb-text b { font-size: 15px; font-weight: 900; }
+        .game-banner .gb-text small { font-size: 11.5px; opacity: 0.92; font-weight: 600; }
+        .game-banner .gb-go { font-size: 13px; font-weight: 900; white-space: nowrap; }
+
+        #game-screen { background: radial-gradient(1000px 640px at 50% -12%, rgba(177,75,255,0.18), transparent 62%), var(--bg-color); }
+        .game-players { display: flex; gap: 12px; padding: 8px 16px 10px; overflow-x: auto; flex-shrink: 0; }
+        .game-players::-webkit-scrollbar { display: none; }
+        .gp-item { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 58px; flex-shrink: 0; }
+        .gp-av { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; background: var(--glass-bg); border: 2px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .gp-item.turn .gp-av { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,46,99,0.28); }
+        .gp-name { font-size: 10.5px; color: var(--text-muted); max-width: 58px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .gp-item.turn .gp-name { color: var(--accent); font-weight: 800; }
+
+        .game-feed { flex: 1; overflow-y: auto; padding: 6px 16px 10px; display: flex; flex-direction: column; gap: 10px; }
+        .game-feed::-webkit-scrollbar { display: none; }
+        .gf-master { align-self: center; max-width: 92%; text-align: center; font-size: 13px; line-height: 1.5; color: #ffdca8; background: rgba(255,138,0,0.12); border: 1px solid rgba(255,138,0,0.32); border-radius: 14px; padding: 9px 14px; white-space: pre-wrap; }
+        .gf-msg { max-width: 82%; display: flex; flex-direction: column; gap: 4px; }
+        .gf-msg.mine { align-self: flex-end; align-items: flex-end; }
+        .gf-who { font-size: 11px; color: var(--text-muted); font-weight: 700; padding: 0 4px; }
+        .gf-bubble { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 14px; padding: 9px 13px; font-size: 14.5px; line-height: 1.4; word-break: break-word; }
+        .gf-msg.mine .gf-bubble { background: rgba(255,46,99,0.18); border-color: rgba(255,46,99,0.4); }
+        .gf-bubble img { max-width: 200px; border-radius: 10px; display: block; }
+        .gf-play { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 700; }
+        .gf-play svg { width: 20px; height: 20px; }
+        .gf-bubble video { max-width: 220px; border-radius: 10px; display: block; }
+        .gf-bubble audio { display: block; max-width: 220px; }
+
+        .game-action { flex-shrink: 0; padding: 12px 16px calc(14px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 10px; background: rgba(10,2,7,0.5); }
+        .ga-spin { display: flex; gap: 10px; }
+        .ga-spin .btn-spin { flex: 2; padding: 15px; border: none; border-radius: 14px; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 900; color: #fff; background: var(--grad); box-shadow: 0 6px 22px rgba(255,46,99,0.4); }
+        .ga-spin .btn-spin:active { transform: scale(0.97); }
+        .ga-spin .btn-dare { flex: 1; padding: 15px 8px; border-radius: 14px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 800; color: #fff; background: rgba(255,255,255,0.09); border: 1px solid var(--glass-border); }
+        .ga-card { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 14px; padding: 12px 14px; }
+        .ga-card .ga-kind { font-size: 11px; font-weight: 900; letter-spacing: 1px; color: var(--accent); }
+        .ga-card .ga-kind.consequencia { color: var(--hot); }
+        .ga-card .ga-kind.prenda { color: var(--ok); }
+        .ga-card .ga-prompt { font-size: 15.5px; line-height: 1.45; margin-top: 4px; white-space: pre-wrap; }
+        .ga-card .ga-victim { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+        .ga-wait { text-align: center; font-size: 13.5px; color: var(--text-muted); padding: 6px 0; }
+        .ga-respond { display: flex; align-items: center; gap: 8px; }
+        .ga-respond input { flex: 1; padding: 12px 14px; border-radius: 22px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.09); color: #fff; font-size: 15px; outline: none; }
+        .ga-attach { display: flex; gap: 8px; }
+        .ga-attach button { flex: 1; padding: 10px 6px; border-radius: 12px; cursor: pointer; font-family: inherit; font-size: 12px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.07); border: 1px solid var(--glass-border); display: flex; flex-direction: column; align-items: center; gap: 3px; }
+        .ga-attach button.rec { background: rgba(255,0,80,0.18); border-color: var(--danger); }
+        .ga-row2 { display: flex; gap: 8px; }
+        .ga-done { flex: 1; padding: 13px; border: none; border-radius: 12px; cursor: pointer; font-family: inherit; font-weight: 900; font-size: 14px; color: #fff; background: var(--grad); }
+        .ga-pass { flex: 1; padding: 13px; border-radius: 12px; cursor: pointer; font-family: inherit; font-weight: 800; font-size: 14px; color: var(--text-muted); background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); }
+
         /* === TOAST / MODAL / VIEWERS / GUARD === */
         .toast {
             position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); background: rgba(29,13,22,0.97);
@@ -986,6 +1043,11 @@
 
             <!-- SALAS -->
             <div class="tab-content" id="tab-salas">
+                <button class="game-banner" onclick="App.openGameLobby()">
+                    <span class="gb-dice">🎲</span>
+                    <span class="gb-text"><b>Verdade ou Consequência</b><small>Crie uma sessão safada e chame a galera pelo link 🔥</small></span>
+                    <span class="gb-go">Jogar ›</span>
+                </button>
                 <div class="tab-content-header">
                     <span id="rooms-count-text">Salas efêmeras</span>
                     <button class="btn-mini" onclick="App.openCreateRoom()">
@@ -1141,6 +1203,26 @@
                 <div id="users-selection" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:10px;"></div>
                 <button class="btn-primary" onclick="App.createGroup()">Iniciar sessão</button>
             </div>
+        </div>
+
+        <!-- JOGO: VERDADE OU CONSEQUÊNCIA -->
+        <div id="game-screen" class="screen">
+            <div class="top-bar">
+                <button class="back-btn" onclick="App.leaveGameScreen()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    Sair
+                </button>
+                <h3 id="game-title">🎲 Jogo</h3>
+                <button class="icon-btn" onclick="App.shareGame()" title="Convidar" aria-label="Convidar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+                </button>
+            </div>
+            <div class="game-players" id="game-players"></div>
+            <div class="game-feed" id="game-feed"></div>
+            <div class="game-action" id="game-action"></div>
+            <input type="file" id="game-photo" accept="image/*" capture="environment" onchange="App.gameHandleMedia(event)" hidden>
+            <input type="file" id="game-gallery" accept="image/*,video/*" onchange="App.gameHandleMedia(event)" hidden>
+            <input type="file" id="game-video" accept="video/*" capture="environment" onchange="App.gameHandleMedia(event)" hidden>
         </div>
 
         <!-- CHAT -->
@@ -1544,9 +1626,16 @@
             ['#3dffa2', '#00b4a0'], ['#1a0b14', '#4a1030'], ['#ffe600', '#ff8a00'], ['#141e30', '#243b55']
         ];
 
+        const GAME_SPICE_LABEL = { leve: '😊 Leve', picante: '🔥 Picante', semfreio: '😈 Sem freio' };
+
         class ErosCore {
             constructor() {
                 this.currentUser = null;
+                this.game = null;           // estado da sessão de jogo atual
+                this.gameInterval = null;
+                this.gameRef = null;        // ?game= na URL
+                this.gameSeen = new Set();  // ids de msgs do jogo já renderizadas
+                this.gameBusy = false;
                 this.currentGroup = null;
                 this.chatUserMap = null;
                 this.chatOtherId = null;
@@ -1729,6 +1818,7 @@
             init() {
                 const params = new URLSearchParams(location.search);
                 this.inviteRef = params.get('ref');
+                this.gameRef = params.get('game'); // link de convite pra uma sessão de jogo
                 if (this.inviteRef) document.getElementById('invite-hint').style.display = 'block';
                 if (API_URL.indexOf('http') !== 0) document.getElementById('api-warning').style.display = 'block';
                 if (localStorage.getItem('eros_age_ok')) this.proceedFromAge();
@@ -1785,6 +1875,7 @@
             logout() {
                 clearTimeout(this._invitePopupTimer); this._invitePopupTimer = null;
                 clearInterval(this.heartbeatInterval); this.heartbeatInterval = null;
+                clearInterval(this.gameInterval); this.gameInterval = null;
                 if (this.call) this.endCall();
                 if (this.live) this.closeLive(true);
                 localStorage.removeItem('eros_session');
@@ -1824,6 +1915,8 @@
                 if (!this.heartbeatInterval) this.heartbeatInterval = setInterval(() => this.runPulse(), 10000);
                 this.scheduleEmailPopup();
                 this.scheduleInvitePopup();
+                // Chegou por um link de jogo? Entra direto na sessão.
+                if (this.gameRef) { const gid = this.gameRef; this.gameRef = null; setTimeout(() => this.enterGame(gid, true), 400); }
             }
             // === COMPLETE O PERFIL: sem email, a conta não tem volta ===
             // Aparece toda vez que entra, até a pessoa cadastrar (ou dispensar nesta sessão).
@@ -4931,6 +5024,282 @@
                     this.toast(`Sala aberta! Evapora em ${this._roomSel.hours}h.`);
                     this.openChat({ id: room.id, name: `${room.emoji} ${room.name}`, type: 'room', expiresAt: room.expiresAt });
                 } catch (e) {}
+            }
+
+            // ==========================================
+            // 🎲 JOGO — Verdade ou Consequência
+            // ==========================================
+            openGameLobby() {
+                this._gameSpice = 'picante';
+                this.showModal(
+                    '<h3>🎲 Verdade ou Consequência</h3>' +
+                    '<input id="game-name-input" placeholder="Nome da sessão (ex: Sexta safada)" maxlength="40" autocomplete="off" style="margin-bottom:10px;">' +
+                    '<p class="hint-text" style="margin:0 0 8px;">Nível de safadeza:</p>' +
+                    '<div class="vis-choice" id="game-spice-choice">' +
+                    '<button onclick="App.gameSetSpice(\'leve\', this)">😊<span>Leve</span></button>' +
+                    '<button class="on" onclick="App.gameSetSpice(\'picante\', this)">🔥<span>Picante</span></button>' +
+                    '<button onclick="App.gameSetSpice(\'semfreio\', this)">😈<span>Sem freio</span></button>' +
+                    '</div>' +
+                    '<button class="btn-primary" style="margin-top:14px;" onclick="App.confirmCreateGame()">Criar e abrir sala 🎲</button>' +
+                    '<p class="hint-text" style="margin:10px 0 0; text-align:center;">Depois é só compartilhar o link — quanto mais gente, mais fogo. 📲</p>'
+                );
+            }
+            gameSetSpice(s, btn) { this._gameSpice = s; document.querySelectorAll('#game-spice-choice button').forEach(b => b.classList.toggle('on', b === btn)); }
+            async confirmCreateGame() {
+                const name = (document.getElementById('game-name-input').value || '').trim();
+                this.closeModal();
+                try {
+                    const g = await this.request('createGame', { name, spice: this._gameSpice });
+                    await this.enterGame(g.gameId, false);
+                    setTimeout(() => this.toast('Sessão criada! Toque no ícone de convite pra chamar a galera. 🔥'), 500);
+                } catch (e) {}
+            }
+            gameLink() { return `${location.origin}${location.pathname}?game=${this.game ? this.game.id : ''}`; }
+            shareGame() {
+                if (!this.game) return;
+                const link = this.gameLink();
+                const text = 'Bora jogar Verdade ou Consequência comigo no Eros 😈🔥\nEntra na minha sessão: ' + link;
+                if (navigator.share) { navigator.share({ title: 'Eros — Jogo', text: text }).catch(() => {}); return; }
+                try { navigator.clipboard.writeText(link); this.toast('Link copiado! Manda pra galera. 📲'); } catch (e) { this.toast(link); }
+            }
+            async enterGame(gameId, silentJoin) {
+                let state = null;
+                try { state = await this.request('joinGame', { gameId }); }
+                catch (e) { if (!silentJoin) this.toast(e.message || 'Não consegui entrar no jogo.'); return; }
+                this.game = state;
+                this.gameSeen = new Set();
+                document.getElementById('game-feed').innerHTML = '';
+                document.getElementById('game-title').textContent = '🎲 ' + (state.name || 'Jogo');
+                this.switchScreen('game-screen');
+                this.applyGameState(state);
+                this.gameFetchFeed();
+                clearInterval(this.gameInterval);
+                this.gameInterval = setInterval(() => this.gameTick(), 3000);
+            }
+            leaveGameScreen(silent) {
+                clearInterval(this.gameInterval); this.gameInterval = null;
+                if (this._gameRec) this.gameStopAudio(false);
+                const gid = this.game ? this.game.id : null;
+                this.game = null;
+                if (gid && !silent) this.request('leaveGame', { gameId: gid }).catch(() => {});
+                this.switchScreen('dashboard-screen');
+                this.switchTab('salas');
+            }
+            async gameTick() {
+                if (!this.game) return;
+                try {
+                    const state = await this.request('getGameState', { gameId: this.game.id });
+                    this.game = state;
+                    this.applyGameState(state);
+                } catch (e) {
+                    if (/não existe|acabou|encerrada|encontrado|primeiro/i.test(e.message || '')) { this.toast('O jogo terminou. 👋'); this.leaveGameScreen(true); }
+                    return;
+                }
+                this.gameFetchFeed();
+            }
+            applyGameState(state) {
+                this._gamePlayers = {};
+                (state.players || []).forEach(p => this._gamePlayers[p.id] = p);
+                this.renderGamePlayers();
+                this.renderGameAction();
+            }
+            renderGamePlayers() {
+                const el = document.getElementById('game-players'); if (!el || !this.game) return;
+                el.innerHTML = '';
+                const round = this.game.round;
+                this.game.players.forEach(p => {
+                    const item = document.createElement('div');
+                    item.className = 'gp-item' + (round && round.s === 'open' && round.v === p.id ? ' turn' : '');
+                    const av = document.createElement('div'); av.className = 'gp-av'; this.setAv(av, p);
+                    const nm = document.createElement('div'); nm.className = 'gp-name';
+                    nm.textContent = p.id === this.currentUser.id ? 'você' : p.name;
+                    item.appendChild(av); item.appendChild(nm); el.appendChild(item);
+                });
+            }
+            renderGameAction() {
+                const el = document.getElementById('game-action'); if (!el || !this.game) return;
+                const round = this.game.round;
+                if (this._gameRec) {
+                    el.innerHTML = this.gameCardHTML(round) +
+                        '<div class="ga-attach"><button class="rec" onclick="App.gameStopAudio(true)">⏹<span>Enviar áudio</span></button><button onclick="App.gameStopAudio(false)">✕<span>Cancelar</span></button></div>';
+                    return;
+                }
+                if (!round || round.s !== 'open') {
+                    el.innerHTML = '<div class="ga-spin"><button class="btn-spin" onclick="App.spinRoulette()">🎲 GIRAR A ROLETA</button><button class="btn-dare" onclick="App.openSendDare()">✍️ Desafiar</button></div>';
+                    return;
+                }
+                if (round.v === this.currentUser.id) {
+                    el.innerHTML = this.gameCardHTML(round) +
+                        '<div class="ga-respond"><input id="game-text-input" placeholder="Responder por texto…" maxlength="500" autocomplete="off" onkeydown="if(event.key===\'Enter\'){event.preventDefault();App.gameSendText();}"><button class="btn-send" onclick="App.gameSendText()"><svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M3.4 20.4l17.45-7.48a1 1 0 000-1.84L3.4 3.6a1 1 0 00-1.4.92V9.5c0 .5.37.92.87.98L15 12 2.87 13.52A1 1 0 002 14.5v4.98a1 1 0 001.4.92z"/></svg></button></div>' +
+                        '<div class="ga-attach">' +
+                        '<button onclick="App.gameAttach(\'game-photo\')">📷<span>Foto</span></button>' +
+                        '<button onclick="App.gameAttach(\'game-video\')">🎥<span>Vídeo</span></button>' +
+                        '<button onclick="App.gameAttach(\'game-gallery\')">🖼️<span>Galeria</span></button>' +
+                        '<button onclick="App.gameToggleAudio()">🎤<span>Áudio</span></button>' +
+                        '</div>' +
+                        '<div class="ga-row2"><button class="ga-pass" onclick="App.gamePass()">' + (round.passed ? '🐤 Amarelar de vez' : '😅 Passo (prenda)') + '</button><button class="ga-done" onclick="App.gameSendText(true)">Cumpri ✅</button></div>';
+                    if (round.p && /convide|convida|chame alguém|alguém de fora/i.test(round.p)) {
+                        el.insertAdjacentHTML('beforeend', '<button class="ga-pass" style="color:var(--accent);border-color:var(--accent);" onclick="App.shareGame()">📲 Compartilhar convite do jogo</button>');
+                    }
+                } else {
+                    el.innerHTML = this.gameCardHTML(round) + '<div class="ga-wait">⏳ Aguardando ' + this.esc(round.victimName || 'a pessoa') + ' cumprir…</div>';
+                }
+            }
+            gameCardHTML(round) {
+                if (!round || round.s !== 'open') return '';
+                const kc = (round.k === 'consequencia' || round.k === 'custom') ? 'consequencia' : (round.k === 'prenda' ? 'prenda' : '');
+                const mine = round.v === this.currentUser.id;
+                return '<div class="ga-card"><div class="ga-kind ' + kc + '">' + this.esc(round.kindLabel || 'DESAFIO') +
+                    (round.byName ? ' • de ' + this.esc(round.byName) : '') + '</div>' +
+                    '<div class="ga-prompt">' + this.esc(round.p) + '</div>' +
+                    '<div class="ga-victim">🎯 ' + (mine ? 'É a SUA vez!' : 'Vez de ' + this.esc(round.victimName || '')) + '</div></div>';
+            }
+            async spinRoulette() {
+                if (!this.game || this.gameBusy) return; this.gameBusy = true;
+                try { const st = await this.request('spinRoulette', { gameId: this.game.id }); this.game = st; this.applyGameState(st); this.gameFetchFeed(); }
+                catch (e) {}
+                this.gameBusy = false;
+            }
+            openSendDare() {
+                if (!this.game) return;
+                const others = this.game.players.filter(p => p.id !== this.currentUser.id);
+                if (!others.length) return this.toast('Chame mais gente pra desafiar. 😏');
+                this._dareTarget = others[0].id; this._dareKind = 'consequencia';
+                const targets = others.map((p, i) => `<button class="chip small${i === 0 ? ' on' : ''}" onclick="App.darePickTarget('${p.id}', this)">${this.esc(p.name)}</button>`).join('');
+                this.showModal(
+                    '<h3>✍️ Desafiar alguém</h3>' +
+                    '<p class="hint-text" style="margin:0 0 6px;">Quem vai encarar?</p><div class="chip-group" id="dare-targets">' + targets + '</div>' +
+                    '<p class="hint-text" style="margin:12px 0 6px;">Tipo:</p><div class="vis-choice" id="dare-kind"><button onclick="App.darePickKind(\'verdade\', this)">🗣️<span>Verdade</span></button><button class="on" onclick="App.darePickKind(\'consequencia\', this)">🔥<span>Consequência</span></button></div>' +
+                    '<textarea id="dare-text" rows="3" maxlength="300" placeholder="Escreva o desafio safado… 😈" style="margin-top:12px;"></textarea>' +
+                    '<button class="btn-primary" style="margin-top:10px;" onclick="App.confirmSendDare()">Mandar desafio 😈</button>'
+                );
+            }
+            darePickTarget(id, btn) { this._dareTarget = id; document.querySelectorAll('#dare-targets button').forEach(b => b.classList.toggle('on', b === btn)); }
+            darePickKind(k, btn) { this._dareKind = k; document.querySelectorAll('#dare-kind button').forEach(b => b.classList.toggle('on', b === btn)); }
+            async confirmSendDare() {
+                const text = (document.getElementById('dare-text').value || '').trim();
+                if (!text) return this.toast('Escreva o desafio.');
+                this.closeModal();
+                try { const st = await this.request('sendDare', { gameId: this.game.id, targetId: this._dareTarget, kind: this._dareKind, text }); this.game = st; this.applyGameState(st); this.gameFetchFeed(); }
+                catch (e) {}
+            }
+            async gamePass() {
+                if (!this.game) return;
+                try { const st = await this.request('passRound', { gameId: this.game.id }); this.game = st; this.applyGameState(st); this.gameFetchFeed(); }
+                catch (e) {}
+            }
+            async gameSendText(closeOnly) {
+                if (!this.game) return;
+                const inp = document.getElementById('game-text-input');
+                const text = inp ? inp.value.trim() : '';
+                if (!closeOnly && !text) return this.toast('Escreva algo — ou toque em "Cumpri" se fez o desafio. 😏');
+                try {
+                    if (text) await this.request('sendMessage', { groupId: this.game.roomId, content: text, type: 'text', mimeType: 'text/plain' });
+                    const st = await this.request('closeRound', { gameId: this.game.id });
+                    if (inp) inp.value = '';
+                    this.game = st; this.applyGameState(st); this.gameFetchFeed();
+                } catch (e) {}
+            }
+            gameAttach(id) { const el = document.getElementById(id); if (el) el.click(); }
+            async gameHandleMedia(event) {
+                const file = event.target.files[0]; event.target.value = '';
+                if (!file || !this.game) return;
+                try {
+                    if (file.type.startsWith('video/')) {
+                        const vid = await this.editVideo(file);
+                        if (!vid) return;
+                        await this.gameUploadAndRespond(vid.file, 'video', vid.file.type || 'video/webm');
+                    } else if (file.type.startsWith('image/')) {
+                        const c = await this.editImage(file, { ratios: IE_RATIOS, maxOut: 1440, quality: 0.86 });
+                        if (!c) return;
+                        await this.gameUploadAndRespond(c.dataUrl, 'image', c.mime);
+                    } else { this.toast('Manda foto, vídeo ou áudio. 😉'); }
+                } catch (e) { this.toast('Não consegui enviar. Tenta de novo.'); }
+            }
+            async gameUploadAndRespond(src, type, mime) {
+                let dataUrl;
+                if (typeof src === 'string') dataUrl = src;
+                else dataUrl = await new Promise(r => { const fr = new FileReader(); fr.onload = e => r(e.target.result); fr.readAsDataURL(src); });
+                const wait = this.toastSticky(type === 'video' ? '⏫ Enviando vídeo…' : '⏫ Enviando…');
+                try {
+                    await this.request('sendMessage', { groupId: this.game.roomId, content: dataUrl, type: type, mimeType: mime });
+                    const st = await this.request('closeRound', { gameId: this.game.id });
+                    this.dropToast(wait);
+                    this.game = st; this.applyGameState(st); this.gameFetchFeed();
+                } catch (e) { this.dropToast(wait); this.toast('O envio falhou. Tenta um arquivo menor.'); }
+            }
+            async gameToggleAudio() {
+                if (this._gameRec) { this.gameStopAudio(true); return; }
+                if (!navigator.mediaDevices || !window.MediaRecorder) return this.toast('Gravação de áudio não é suportada aqui.');
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    this._gameStream = stream; this._gameChunks = [];
+                    const rec = new MediaRecorder(stream); this._gameRec = rec; this._gameRecSend = true;
+                    rec.ondataavailable = e => { if (e.data && e.data.size) this._gameChunks.push(e.data); };
+                    rec.onstop = async () => {
+                        try { this._gameStream.getTracks().forEach(t => t.stop()); } catch (e) {}
+                        const send = this._gameRecSend; const chunks = this._gameChunks; const mime = rec.mimeType || 'audio/webm';
+                        this._gameRec = null; this._gameStream = null; this._gameChunks = [];
+                        this.renderGameAction();
+                        if (send && chunks.length) { const blob = new Blob(chunks, { type: mime }); await this.gameUploadAndRespond(blob, 'audio', mime); }
+                    };
+                    rec.start();
+                    this.renderGameAction();
+                } catch (e) { this.toast('Não consegui acessar o microfone.'); }
+            }
+            gameStopAudio(send) { this._gameRecSend = !!send; if (this._gameRec) { try { this._gameRec.stop(); } catch (e) {} } }
+            async gameFetchFeed() {
+                if (!this.game) return;
+                try {
+                    const res = await this.request('syncMessages', { groupId: this.game.roomId, tail: 40 });
+                    this.renderGameFeed(res.tail || res.messages || []);
+                } catch (e) {}
+            }
+            gamePlayerName(id) {
+                if (id === this.currentUser.id) return 'você';
+                const p = this._gamePlayers && this._gamePlayers[id];
+                return p ? p.name : 'Alguém';
+            }
+            renderGameFeed(list) {
+                const feed = document.getElementById('game-feed'); if (!feed) return;
+                let added = false;
+                list.forEach(m => {
+                    if (this.gameSeen.has(m.id)) return;
+                    this.gameSeen.add(m.id); added = true;
+                    feed.appendChild(this.gameFeedItem(m));
+                });
+                if (added) feed.scrollTop = feed.scrollHeight;
+            }
+            gameFeedItem(m) {
+                if (m.senderId === EROS_BOT_ID) {
+                    const d = document.createElement('div'); d.className = 'gf-master'; d.textContent = m.content; return d;
+                }
+                const mine = m.senderId === this.currentUser.id;
+                const wrap = document.createElement('div'); wrap.className = 'gf-msg' + (mine ? ' mine' : '');
+                const who = document.createElement('div'); who.className = 'gf-who'; who.textContent = this.gamePlayerName(m.senderId);
+                const bubble = document.createElement('div'); bubble.className = 'gf-bubble';
+                if (m.type === 'image') {
+                    const img = document.createElement('img'); img.loading = 'lazy'; img.draggable = false; img.oncontextmenu = () => false; img.src = this.driveImageUrl(m.content);
+                    bubble.appendChild(img);
+                } else if (m.type === 'video' || m.type === 'audio') {
+                    const play = document.createElement('span'); play.className = 'gf-play';
+                    play.innerHTML = (m.type === 'video' ? ICONS.play : '🎧') + '<span>' + (m.type === 'video' ? 'Ver vídeo' : 'Ouvir áudio') + '</span>';
+                    play.onclick = () => this.gamePlayMedia(play, m.content, m.type);
+                    bubble.appendChild(play);
+                } else {
+                    bubble.textContent = m.content;
+                }
+                wrap.appendChild(who); wrap.appendChild(bubble);
+                return wrap;
+            }
+            async gamePlayMedia(node, fileId, kind) {
+                if (node._loading) return; node._loading = true;
+                const original = node.innerHTML; node.innerHTML = '⏳ carregando…';
+                try {
+                    const url = await this.fetchMediaBlobUrl(fileId);
+                    if (kind === 'video') { const v = this.buildVideo(url, ''); v.style.maxWidth = '220px'; node.replaceWith(v); v.play().catch(() => {}); }
+                    else { const a = document.createElement('audio'); a.controls = true; a.src = url; node.replaceWith(a); a.play().catch(() => {}); }
+                } catch (e) { node.innerHTML = original; node._loading = false; this.toast('Não consegui abrir a mídia.'); }
             }
 
             // ==========================================
