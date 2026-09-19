@@ -7,7 +7,7 @@
 //
 // Publicou uma atualização importante e quer forçar todo mundo a pegar na hora?
 // Basta subir o número da versão abaixo (ex: v1 -> v2).
-const CACHE = 'eros-shell-v1';
+const CACHE = 'eros-shell-v2';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
