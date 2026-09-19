@@ -801,6 +801,7 @@
         .ga-row2 { display: flex; gap: 8px; }
         .ga-done { flex: 1; padding: 13px; border: none; border-radius: 12px; cursor: pointer; font-family: inherit; font-weight: 900; font-size: 14px; color: #fff; background: var(--grad); }
         .ga-pass { flex: 1; padding: 13px; border-radius: 12px; cursor: pointer; font-family: inherit; font-weight: 800; font-size: 14px; color: var(--text-muted); background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); }
+        .ga-hint { font-size: 12.5px; color: #9fffce; background: rgba(61,255,162,0.1); border: 1px solid rgba(61,255,162,0.28); border-radius: 10px; padding: 8px 11px; line-height: 1.4; }
 
         /* Animação da roleta */
         .game-roulette { display: none; position: fixed; inset: 0; z-index: 4600; background: rgba(6,2,5,0.92); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 20px; }
@@ -1118,7 +1119,7 @@
                         <span class="pg-hint">♾️ eterno · ⏳ temporário</span>
                     </div>
                     <div class="pg-grid" id="profile-grid"></div>
-                    <p class="hint-text" style="text-align:center; opacity:0.55; margin-top:14px;">Eros — build v2.9</p>
+                    <p class="hint-text" style="text-align:center; opacity:0.55; margin-top:14px;">Eros — build v2.9.1</p>
                 </div>
             </div>
         </div>
@@ -5104,6 +5105,7 @@
                 const state = res.state || res; // joinGame agora devolve { state, tail }
                 this.game = state;
                 this.gameSeen = new Set();
+                this._actionSig = null; this._playersSig = null; // força a 1ª renderização da nova sessão
                 this._lastRoundAt = state.round && state.round.s === 'open' ? state.round.at : null; // não anima a rodada que já estava rolando ao entrar
                 document.getElementById('game-feed').innerHTML = '';
                 document.getElementById('game-title').textContent = '🎲 ' + (state.name || 'Jogo');
@@ -5118,7 +5120,9 @@
                 if (this._gameRec) this.gameStopAudio(false);
                 const gid = this.game ? this.game.id : null;
                 this.game = null;
+                this._actionSig = null; this._playersSig = null;
                 document.getElementById('game-roulette').classList.remove('open');
+                const gs = document.getElementById('game-screen'); gs.style.height = ''; gs.style.top = ''; // limpa o ajuste de teclado
                 if (gid && !silent) this.request('leaveGame', { gameId: gid }).catch(() => {});
                 this.switchScreen('dashboard-screen');
                 this.switchTab('salas');
@@ -5141,11 +5145,21 @@
                 if (res.tail) this.renderGameFeed(res.tail);
                 this.maybeAnimateRound(state.round);
             }
-            applyGameState(state) {
+            applyGameState(state, force) {
                 this._gamePlayers = {};
                 (state.players || []).forEach(p => this._gamePlayers[p.id] = p);
-                this.renderGamePlayers();
-                this.renderGameAction();
+                const round = state.round;
+                // Só re-renderiza quando algo REALMENTE muda. Sem isso, o polling de 3s
+                // recriava o campo de texto a cada tick — derrubava o teclado e apagava o que
+                // você digitava. As assinaturas abaixo evitam esse rebuild desnecessário.
+                const psig = (state.players || []).map(p => p.id).join(',') + '|' + (round && round.s === 'open' ? round.v : '');
+                if (force || psig !== this._playersSig) { this._playersSig = psig; this.renderGamePlayers(); }
+                const asig = round ? [round.at, round.s, round.passed ? 1 : 0, round.k, round.v, round.p, round.byName || ''].join('¦') : 'none';
+                const box = document.getElementById('game-action');
+                if (force || asig !== this._actionSig || !box || !box.hasChildNodes()) {
+                    this._actionSig = asig;
+                    this.renderGameAction();
+                }
             }
             maybeAnimateRound(round) {
                 const at = (round && round.s === 'open') ? round.at : null;
@@ -5214,7 +5228,9 @@
                     return;
                 }
                 if (round.v === this.currentUser.id) {
+                    const prenda = round.passed;
                     el.innerHTML = this.gameCardHTML(round) +
+                        (prenda ? '<div class="ga-hint">👇 Cumpra a prenda (texto, foto, vídeo ou áudio) e toque em <b>Cumpri ✅</b>.</div>' : '') +
                         '<div class="ga-respond"><input id="game-text-input" placeholder="Responder por texto…" maxlength="500" autocomplete="off" onkeydown="if(event.key===\'Enter\'){event.preventDefault();App.gameSendText();}"><button class="btn-send" onclick="App.gameSendText()"><svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M3.4 20.4l17.45-7.48a1 1 0 000-1.84L3.4 3.6a1 1 0 00-1.4.92V9.5c0 .5.37.92.87.98L15 12 2.87 13.52A1 1 0 002 14.5v4.98a1 1 0 001.4.92z"/></svg></button></div>' +
                         '<div class="ga-attach">' +
                         '<button onclick="App.gameAttach(\'game-photo\')">📷<span>Foto</span></button>' +
@@ -5222,7 +5238,7 @@
                         '<button onclick="App.gameAttach(\'game-gallery\')">🖼️<span>Galeria</span></button>' +
                         '<button onclick="App.gameToggleAudio()">🎤<span>Áudio</span></button>' +
                         '</div>' +
-                        '<div class="ga-row2"><button class="ga-pass" onclick="App.gamePass()">' + (round.passed ? '🐤 Amarelar de vez' : '😅 Passo (prenda)') + '</button><button class="ga-done" onclick="App.gameSendText(true)">Cumpri ✅</button></div>';
+                        '<div class="ga-row2"><button class="ga-pass" onclick="App.gamePass()">' + (prenda ? '🐤 Desistir de vez' : '😅 Passo (paga prenda)') + '</button><button class="ga-done" onclick="App.gameSendText(true)">Cumpri ✅</button></div>';
                     if (round.p && /convide|convida|chame alguém|alguém de fora/i.test(round.p)) {
                         el.insertAdjacentHTML('beforeend', '<button class="ga-pass" style="color:var(--accent);border-color:var(--accent);" onclick="App.shareGame()">📲 Compartilhar convite do jogo</button>');
                     }
@@ -5841,6 +5857,10 @@
                         comp.style.bottom = 'auto';
                         if (this.sc) this.scLayout(this.sc.ar);
                     } else { comp.style.top = ''; comp.style.height = ''; comp.style.bottom = ''; }
+                    // Tela do jogo: encolhe pra deixar o campo de resposta visível acima do teclado.
+                    const gs = document.getElementById('game-screen');
+                    if (gs.classList.contains('active')) { gs.style.height = vv.height + 'px'; gs.style.top = vv.offsetTop + 'px'; }
+                    else { gs.style.height = ''; gs.style.top = ''; }
                 };
                 vv.addEventListener('resize', apply); vv.addEventListener('scroll', apply);
             }
